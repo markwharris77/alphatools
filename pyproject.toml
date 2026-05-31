@@ -1,0 +1,43 @@
+[project]
+name = "alphatools"
+version = "0.1.0"
+description = "Quant research toolkit: local-first market data and more"
+readme = "README.md"
+authors = [
+    { name = "Mark Harris", email = "mark_harris77@hotmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "polars>=1.0",
+    "pyarrow>=16.0",
+    "yfinance>=0.2.40",
+    "pydantic>=2.7",
+    "platformdirs>=4.0",
+]
+
+[project.scripts]
+alphatools = "alphatools:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.15,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: tests that hit the live yfinance API (deselected by default)",
+]
+addopts = "-m 'not integration'"
